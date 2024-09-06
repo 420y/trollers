@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trollers Are Here</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- Minecraft-style font -->
-    <!-- Include Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -24,7 +23,6 @@
             font-family: 'Press Start 2P', cursive; /* Minecraft-style font */
             font-size: 24px;
             overflow: hidden;
-            position: relative; /* Required for absolute positioning of matrix effect */
             cursor: url('weed-icon.svg') 12 12, auto; /* Custom cursor */
         }
 
@@ -92,51 +90,22 @@
             }
         }
 
-        /* Green sparkling effect for cursor */
-        body::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, rgba(0, 255, 0, 0.5) 0%, rgba(0, 255, 0, 0) 80%);
-            pointer-events: none;
-            border-radius: 50%;
-            z-index: 2;
-            animation: sparkle 1.5s infinite;
-            transform: translate(-50%, -50%);
-        }
-
-        @keyframes sparkle {
-            0% {
-                opacity: 0;
-                transform: scale(0.8) translate(-50%, -50%);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1) translate(-50%, -50%);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.8) translate(-50%, -50%);
-            }
-        }
-
-        /* Apply a glow effect to the custom cursor */
+        /* Custom cursor styles */
         .custom-cursor {
             position: absolute;
             width: 24px; /* Adjust size as needed */
             height: 24px; /* Adjust size as needed */
             background: url('weed-icon.svg') no-repeat center center;
             background-size: contain;
-            filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.8)); /* Subtle glow */
             pointer-events: none;
-            transform: translate(-50%, -50%);
             z-index: 3;
+            transform: translate(-50%, -50%);
             transition: filter 0.2s ease; /* Smooth transition for hover effect */
+            filter: drop-shadow(0 0 3px rgba(0, 255, 0, 0.8)); /* Subtle glow effect */
         }
 
         body:hover .custom-cursor {
-            filter: drop-shadow(0 0 10px rgba(0, 255, 0, 1)); /* Enhanced glow on hover */
+            filter: drop-shadow(0 0 8px rgba(0, 255, 0, 1)); /* Enhanced glow on hover */
         }
 
         /* Hide the YouTube iframe */
@@ -164,11 +133,11 @@
     <!-- Custom cursor element -->
     <div class="custom-cursor"></div>
 
-    <!-- Embed YouTube video as audio source -->
-    <iframe id="youtube-audio" width="560" height="315" 
-        src="https://www.youtube.com/embed/9_2T5zpsPLo?autoplay=1&loop=1&playlist=9_2T5zpsPLo"
-        title="YouTube audio player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <!-- HTML5 Audio Player -->
+    <audio controls autoplay loop style="display: none;">
+        <source src="troll.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         document.addEventListener('mousemove', function(e) {
