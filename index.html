@@ -104,6 +104,15 @@
         body:hover .custom-cursor {
             filter: drop-shadow(0 0 8px rgba(0, 255, 0, 1));
         }
+
+        #youtube-video {
+            position: absolute;
+            width: 0;
+            height: 0;
+            top: -9999px;
+            left: -9999px;
+            z-index: 0; /* Ensure it's behind all content */
+        }
     </style>
 </head>
 <body>
@@ -119,11 +128,8 @@
 
     <div class="custom-cursor"></div>
 
-    <!-- Basic Audio Setup -->
-    <audio controls autoplay loop>
-        <source src="trolls.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <!-- Embed YouTube video for background music -->
+    <iframe id="youtube-video" src="https://www.youtube.com/embed/9_2T5zpsPLo?autoplay=1&loop=1&playlist=9_2T5zpsPLo&controls=0&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
     <script>
         document.addEventListener('mousemove', function(e) {
