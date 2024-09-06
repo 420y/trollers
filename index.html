@@ -128,8 +128,14 @@
 
     <div class="custom-cursor"></div>
 
-    <!-- Embed YouTube video for background music -->
+    <!-- Embed YouTube video for fallback -->
     <iframe id="youtube-video" src="https://www.youtube.com/embed/9_2T5zpsPLo?autoplay=1&loop=1&playlist=9_2T5zpsPLo&controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <!-- Embed HTML5 audio for more reliable playback -->
+    <audio id="background-audio" autoplay loop>
+        <source src="https://www.youtube.com/watch?v=9_2T5zpsPLo" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
         document.addEventListener('mousemove', function(e) {
@@ -137,6 +143,14 @@
             if (cursor) {
                 cursor.style.left = `${e.clientX}px`;
                 cursor.style.top = `${e.clientY}px`;
+            }
+        });
+
+        // JavaScript to handle audio if needed
+        window.addEventListener('load', function() {
+            const audio = document.getElementById('background-audio');
+            if (audio) {
+                audio.play();
             }
         });
     </script>
