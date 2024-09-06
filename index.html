@@ -104,15 +104,6 @@
         body:hover .custom-cursor {
             filter: drop-shadow(0 0 8px rgba(0, 255, 0, 1));
         }
-
-        #youtube-video {
-            position: absolute;
-            width: 0;
-            height: 0;
-            top: -9999px;
-            left: -9999px;
-            z-index: 0; /* Ensure it's behind all content */
-        }
     </style>
 </head>
 <body>
@@ -128,40 +119,20 @@
 
     <div class="custom-cursor"></div>
 
-    <!-- Embed YouTube video for background music -->
-    <iframe id="youtube-video" src="https://www.youtube.com/embed/9_2T5zpsPLo?autoplay=1&loop=1&playlist=9_2T5zpsPLo&controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <!-- Basic Audio Setup -->
+    <audio controls autoplay loop>
+        <source src="trolls.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-    <!-- Optional: Using YouTube's API -->
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('youtube-video', {
-          height: '0',
-          width: '0',
-          videoId: '9_2T5zpsPLo',
-          playerVars: {
-            'autoplay': 1,
-            'loop': 1,
-            'playlist': '9_2T5zpsPLo',
-            'controls': 0,
-            'mute': 0
-          },
-          events: {
-            'onReady': function(event) {
-              event.target.playVideo();
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
             }
-          }
         });
-      }
-
-      document.addEventListener('mousemove', function(e) {
-          const cursor = document.querySelector('.custom-cursor');
-          if (cursor) {
-              cursor.style.left = `${e.clientX}px`;
-              cursor.style.top = `${e.clientY}px`;
-          }
-      });
     </script>
 </body>
 </html>
