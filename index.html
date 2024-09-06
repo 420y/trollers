@@ -108,14 +108,6 @@
         body:hover .custom-cursor {
             filter: drop-shadow(0 0 8px rgba(0, 255, 0, 1)); /* Enhanced glow on hover */
         }
-
-        /* Hide the YouTube iframe */
-        #youtube-audio {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            z-index: -1; /* Ensure it is behind everything */
-        }
     </style>
 </head>
 <body>
@@ -143,8 +135,10 @@
     <script>
         document.addEventListener('mousemove', function(e) {
             const cursor = document.querySelector('.custom-cursor');
-            cursor.style.left = `${e.clientX}px`;
-            cursor.style.top = `${e.clientY}px`;
+            if (cursor) {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+            }
         });
     </script>
 </body>
