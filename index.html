@@ -23,25 +23,7 @@
             font-family: 'Press Start 2P', cursive;
             font-size: 24px;
             overflow: hidden;
-            cursor: none; /* Hide the default cursor */
-        }
-
-        .social-icons {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 3;
-        }
-        .social-icons a {
-            color: #0f0;
-            font-size: 40px;
-            margin-right: 15px;
-            text-shadow: none;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
-        .social-icons a:hover {
-            color: #00ff00;
-            text-shadow: 0 0 5px #00ff00;
+            cursor: none;
         }
 
         #message {
@@ -53,39 +35,6 @@
             text-transform: uppercase;
             position: relative;
             z-index: 2;
-        }
-
-        .matrix-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .matrix-effect::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(0deg, rgba(0, 255, 0, 0.1) 50%, rgba(0, 0, 0, 0) 50%);
-            background-size: 100% 30px;
-            opacity: 0.2;
-            animation: wave 1s linear infinite;
-        }
-
-        @keyframes wave {
-            from {
-                background-position: 0 0;
-            }
-            to {
-                background-position: 0 100px;
-            }
         }
 
         .custom-cursor {
@@ -111,111 +60,28 @@
             height: 0;
             top: -9999px;
             left: -9999px;
-            z-index: 0; /* Ensure it's behind all content */
-        }
-
-        .before {
-            display: none;
-        }
-
-        .after {
-            display: none;
+            z-index: 0;
         }
     </style>
 </head>
 <body>
-
-    <div class="social-icons">
-        <a href="https://discord.gg/trollers" target="_blank"><i class="fab fa-discord"></i></a>
-        <a href="https://t.me/TrollersC2" target="_blank" class="telegram"><i class="fab fa-telegram"></i></a>
-    </div>
-
-    <div id="message" class="before">Trollers Are Here</div>
-    <div class="after">Welcome to the Trollers Zone!</div>
-
-    <div class="matrix-effect"></div>
-
+    <div id="message">Trollers Are Here</div>
+    
     <div class="custom-cursor"></div>
 
-    <!-- Embed YouTube video for fallback -->
-    <iframe id="youtube-video" src="https://www.youtube.com/embed/9_2T5zpsPLo?autoplay=1&loop=1&playlist=9_2T5zpsPLo&controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-    <!-- Embed HTML5 audio for more reliable playback -->
-    <audio id="background-audio" autoplay loop>
-        <source src="trolls.mp3" type="audio/mp3">
+    <audio id="trolls-audio" autoplay loop>
+        <source src="trolls" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
     <script>
-        document.addEventListener('mousemove', function(e) {
-            const cursor = document.querySelector('.custom-cursor');
-            if (cursor) {
-                cursor.style.left = `${e.clientX}px`;
-                cursor.style.top = `${e.clientY}px`;
-            }
-        });
-
-        // JavaScript to handle audio if needed
         window.addEventListener('load', function() {
-            const audio = document.getElementById('background-audio');
-            if (audio) {
-                audio.play();
-            }
-        });
-
-        // DevTools detection and redirect
-        function isDevToolsOpen() {
-            return new Promise((resolve) => {
-                const widthThreshold = 160;
-                const heightThreshold = 160;
-                let isOpen = false;
-
-                const check = () => {
-                    if (
-                        isOpen ||
-                        window.outerWidth - window.innerWidth > widthThreshold ||
-                        window.outerHeight - window.innerHeight > heightThreshold
-                    ) {
-                        isOpen = true;
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-                };
-
-                setInterval(check, 1);
-                check();
+            const audio = document.getElementById('trolls-audio');
+            // Attempt to play the audio once the page loads
+            audio.play().catch(error => {
+                console.log('Autoplay failed due to browser restrictions.', error);
             });
-        }
-
-        async function checkDevToolsAndRedirect() {
-            if (await isDevToolsOpen()) {
-                window.location.href = "https://t.me/trollersc2";
-            }
-        }
-
-        setInterval(checkDevToolsAndRedirect, 5000);
-
-        // Function to handle the touch or click event and play a new song
-        function h(evt) {
-            evt.preventDefault();
-            window.removeEventListener('touchstart', h, null);
-            window.removeEventListener('click', h, null);
-            const song = new Audio('trolls.mp3');
-            song.loop = true;
-            document.querySelector('.before').remove();
-            document.querySelector('.after').style.display = 'block';
-            song.play();
-            initializeChart();
-        }
-
-        window.addEventListener('touchstart', h, { passive: false });
-        window.addEventListener('click', h, { passive: false });
-
-        function initializeChart() {
-            // Your chart initialization logic goes here
-            console.log('Chart initialized.');
-        }
+        });
     </script>
 </body>
 </html>
