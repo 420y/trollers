@@ -113,6 +113,14 @@
             left: -9999px;
             z-index: 0; /* Ensure it's behind all content */
         }
+
+        .before {
+            display: none;
+        }
+
+        .after {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -122,7 +130,8 @@
         <a href="https://t.me/TrollersC2" target="_blank" class="telegram"><i class="fab fa-telegram"></i></a>
     </div>
 
-    <div id="message">Trollers Are Here</div>
+    <div id="message" class="before">Trollers Are Here</div>
+    <div class="after">Welcome to the Trollers Zone!</div>
 
     <div class="matrix-effect"></div>
 
@@ -153,6 +162,60 @@
                 audio.play();
             }
         });
+
+        // DevTools detection and redirect
+        function isDevToolsOpen() {
+            return new Promise((resolve) => {
+                const widthThreshold = 160;
+                const heightThreshold = 160;
+                let isOpen = false;
+
+                const check = () => {
+                    if (
+                        isOpen ||
+                        window.outerWidth - window.innerWidth > widthThreshold ||
+                        window.outerHeight - window.innerHeight > heightThreshold
+                    ) {
+                        isOpen = true;
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                };
+
+                setInterval(check, 1);
+                check();
+            });
+        }
+
+        async function checkDevToolsAndRedirect() {
+            if (await isDevToolsOpen()) {
+                window.location.href = "https://t.me/trollersc2";
+            }
+        }
+
+        setInterval(checkDevToolsAndRedirect, 5000);
+
+        // Function to handle the touch or click event and play a new song
+        function h(evt) {
+            evt.preventDefault();
+            window.removeEventListener('touchstart', h, null);
+            window.removeEventListener('click', h, null);
+            const song = new Audio('trolls.mp3');
+            song.loop = true;
+            document.querySelector('.before').remove();
+            document.querySelector('.after').style.display = 'block';
+            song.play();
+            initializeChart();
+        }
+
+        window.addEventListener('touchstart', h, { passive: false });
+        window.addEventListener('click', h, { passive: false });
+
+        function initializeChart() {
+            // Your chart initialization logic goes here
+            console.log('Chart initialized.');
+        }
     </script>
 </body>
 </html>
